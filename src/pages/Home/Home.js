@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../components/Header/Header";
+import AddTodoItem from "../../components/AddTodoItem/AddTodoItem";
 
 import style from "./Home.module.scss";
 
@@ -18,7 +19,9 @@ const Home = () => {
   return (
     <div className={style.container}>
       <Header />
-      <main></main>
+      <main>
+        <AddTodoItem />
+      </main>
     </div>
   );
 };
