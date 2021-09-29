@@ -1,3 +1,22 @@
 .addTodoItem {
     padding: 1rem;
+    width: 35rem;
+}
+
+.addTodoItemContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.deadline.deadline {
+    margin-top: 1.5rem;
+}
+
+.addBtn.addBtn {
+    margin-top: 1rem;
+}
+
+.addTodoItemIcon {
+    margin-right: 0.5rem;
 }
