@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -7,46 +7,69 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 
 import style from "./AddTodoItem.module.scss";
 
-const AddTodoItem = () => {
-  const [todoItemDescription, setTodoItemDescription] = useState('');
+const AddTodoItem = ({ submit }) => {
+  let [todoItemDescription, setTodoItemDescription] = useState("");
+  const [isAddBtnAvailable, setAddIsBtnAvailable] = useState(true);
+  let [deadline, setDeadline] = useState("");
 
-  const handleSubmit = () => {
-    console.log("a");
+  const handleChangeTodoItem = (event) => {
+    setTodoItemDescription(event.target.value);
   };
+
+  const handleChangeDeadline = (event) => {
+    setDeadline(event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    submit(todoItemDescription, deadline);
+    setTodoItemDescription("");
+    setDeadline("");
+    setAddIsBtnAvailable(true);
+  };
+
+  useEffect(() => {
+    if (todoItemDescription && deadline) {
+      setAddIsBtnAvailable(false);
+    }
+  }, [todoItemDescription, deadline]);
 
   return (
     <div className={style.addTodoItem}>
       <Card>
-        <CardContent>
-          <form onSubmit={handleSubmit} className={style.addTodoItemContainer}>
-            <TextField
-              id="standard-basic"
-              label="Todo item"
-              variant="standard"
-              className={style.itemDescription}
-              required
-            />
+        <CardContent className={style.addTodoItemContainer}>
+          <TextField
+            id="standard-basic"
+            label="Todo item"
+            variant="standard"
+            className={style.itemDescription}
+            required
+            value={todoItemDescription}
+            onChange={handleChangeTodoItem}
+          />
 
-            <TextField
-              className={style.deadline}
-              type="datetime-local"
-              label="TodoItem deadline"
-              defaultValue="2017-05-24T10:30"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              required
-            />
+          <TextField
+            className={style.deadline}
+            type="datetime-local"
+            label="TodoItem deadline"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            required
+            value={deadline}
+            onChange={handleChangeDeadline}
+          />
 
-            <Button
-              variant="contained"
-              color="primary"
-              className={style.addBtn}
-            >
-              <AddTaskIcon className={style.addTodoItemIcon} />
-              ADD
-            </Button>
-          </form>
+          <Button
+            variant="contained"
+            color="primary"
+            className={style.addBtn}
+            onClick={onSubmit}
+            disabled={isAddBtnAvailable}
+          >
+            <AddTaskIcon className={style.addTodoItemIcon} />
+            ADD
+          </Button>
         </CardContent>
       </Card>
     </div>

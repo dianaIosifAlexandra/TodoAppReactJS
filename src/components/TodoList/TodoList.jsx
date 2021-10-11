@@ -5,15 +5,22 @@ import CardContent from "@mui/material/CardContent";
 import List from "@mui/material/List";
 import style from "./TodoList.module.scss";
 
-const TodoList = ({ todoList = [] }) => {
+const TodoList = ({ todoList, deleteTodoItem }) => {
+  const onDeleteTodoItem = (id) => {
+    deleteTodoItem(id);
+  };
+
   return (
     <div className={style.todoListContainer}>
       <Card>
         <CardContent>
-          <TodoItem />
           <List>
             {todoList.map((todoItem) => (
-              <TodoItem todoItem={todoItem} key={todoItem.id} />
+              <TodoItem
+                todoItem={todoItem}
+                key={todoItem.id}
+                deletetodoItem={onDeleteTodoItem}
+              />
             ))}
           </List>
         </CardContent>
