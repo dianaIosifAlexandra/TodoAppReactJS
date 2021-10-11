@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
@@ -6,26 +6,52 @@ import TextField from "@mui/material/TextField";
 
 import style from "./EditModal.module.scss";
 
-const EditModal = ({ open, onClose }) => {
+const EditModal = ({ editedItem, open, onClose, saveEditedTodoItem }) => {
+  const [itemDescription, setItemDescription] = useState(editedItem);
+
+  const handleChangeTodoItemDescription = (event) => {
+    setItemDescription(event.target.value);
+  };
+
   const handleClose = () => {
     onClose();
   };
 
-  //   const handleListItemClick = (value) => {
-  //     onClose(value);
-  //   };
+  const onSaveItemDescription = () => {
+    saveEditedTodoItem(itemDescription);
+    setItemDescription("");
+    onClose();
+  };
   return (
-    <Dialog onClose={handleClose} open={open} className={style.dialogContainer}>
-      <DialogTitle>EditModal</DialogTitle>
+    <Dialog onClose={handleClose} open={open} fullWidth>
+      <DialogTitle>Edit todo item</DialogTitle>
       <TextField
+        className={style.textField}
         id="standard-basic"
-        label="Todo item"
+        label="Todo item description"
         variant="standard"
         required
-        // value={todoItemDescription}
-        // onChange={handleChangeTodoItem}
+        value={itemDescription}
+        onChange={handleChangeTodoItemDescription}
       />
-      <Button variant="contained">Contained</Button>
+      <div className={style.buttonGroup}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={style.saveBtn}
+          onClick={onSaveItemDescription}
+        >
+          Save
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={style.cancelBtn}
+          onClick={handleClose}
+        >
+          Cancel
+        </Button>
+      </div>
     </Dialog>
   );
 };

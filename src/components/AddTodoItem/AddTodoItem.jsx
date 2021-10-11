@@ -46,6 +46,7 @@ const AddTodoItem = ({ submit }) => {
             required
             value={todoItemDescription}
             onChange={handleChangeTodoItem}
+            fullWidth
           />
 
           <TextField
@@ -58,6 +59,7 @@ const AddTodoItem = ({ submit }) => {
             required
             value={deadline}
             onChange={handleChangeDeadline}
+            fullWidth
           />
 
           <Button

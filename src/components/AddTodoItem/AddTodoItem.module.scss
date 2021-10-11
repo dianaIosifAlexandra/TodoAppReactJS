@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .deadline.deadline {
@@ -14,6 +15,7 @@
 
 .addBtn.addBtn {
     margin-top: 1rem;
+    width: 10rem;
 }
 
 .addTodoItemIcon {

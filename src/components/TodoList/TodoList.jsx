@@ -5,9 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import List from "@mui/material/List";
 import style from "./TodoList.module.scss";
 
-const TodoList = ({ todoList, deleteTodoItem }) => {
+const TodoList = ({ todoList, deleteTodoItem, updateEditedTodoItem }) => {
   const onDeleteTodoItem = (id) => {
     deleteTodoItem(id);
+  };
+
+  const updateTodoItemDescription = (id, newItemDescription) => {
+    updateEditedTodoItem(id, newItemDescription);
   };
 
   return (
@@ -20,6 +24,7 @@ const TodoList = ({ todoList, deleteTodoItem }) => {
                 todoItem={todoItem}
                 key={todoItem.id}
                 deletetodoItem={onDeleteTodoItem}
+                updateTodoItem={updateTodoItemDescription}
               />
             ))}
           </List>
