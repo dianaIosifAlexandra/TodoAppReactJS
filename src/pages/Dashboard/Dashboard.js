@@ -1,35 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/Header/Header";
 import AddTodoItem from "../../components/AddTodoItem/AddTodoItem";
 import TodoList from "../../components/TodoList/TodoList";
 import TodoItem from "../../models/TodoItem";
 
-import style from "./Home.module.scss";
+import style from "./Dashboard.module.scss";
 
-const TODOLIST = [
-  new TodoItem(
-    1,
-    "Make your homework!",
-    new Date("June 12, 2022 17:30").toString(),
-    false
-  ),
-  new TodoItem(
-    2,
-    "Learn for IOT exam!",
-    new Date("July 12, 2022 19:30").toString(),
-    false
-  ),
-  new TodoItem(
-    3,
-    "Learn for IOT exam!",
-    new Date("October 11, 2021 20:30").toString(),
-    false
-  ),
-];
-
-const Home = () => {
+const Dashboard = () => {
   const today = new Date();
-  const [todoList, setTodoList] = useState(TODOLIST);
+  const [todoList, setTodoList] = useState(() => {
+    // getting stored value
+    const saved = localStorage.getItem("todoList");
+    const initialValue = JSON.parse(saved);
+    return initialValue || [];
+  });
 
   const deadlineIsToday = (deadline) => {
     let deadlineIsToday = false;
@@ -81,13 +65,17 @@ const Home = () => {
         if (item.id === id) {
           item.description = newItemDescription;
         }
-
         return item;
       });
 
       return editedList;
     });
   };
+
+  useEffect(() => {
+    // storing input TODO list
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+  }, [todoList]);
 
   return (
     <div className={style.container}>
@@ -111,4 +99,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;
