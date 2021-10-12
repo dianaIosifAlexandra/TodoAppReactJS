@@ -1,9 +1,11 @@
+@import "../../style/variables.scss";
+
 .todoListContainer {
     padding: 1rem;
 }
 
 .listTitle {
-    background: linear-gradient(#e66465, #9198e5);
+    background: $background-primary;
     color: white;
     font-size: 1.5rem;
 }

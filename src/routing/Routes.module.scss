@@ -1,0 +1,16 @@
+@import "../style/variables.scss";
+
+.menu {
+    display: inline-flex; 
+}
+
+.menuItem {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 20%;
+}
+
+.routeLink {
+    text-decoration: none;
+    font-size: 1.2rem;
+    
+}

@@ -1,5 +1,7 @@
+@import "../../style/variables.scss";
+
 .cardContainer {
-    width: 55.5rem;
+    width: 58rem;
 }
 
 .headerContainer {
@@ -7,7 +9,7 @@
   }
   
   .headerCard {
-    background: linear-gradient(#e66465, #9198e5);
+    background: $background-primary;
     color: white;
     font-size: 1.5rem;
   }
