@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
+import { TodoContextProvider } from "./store/TodoContext";
 
 ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
+  <TodoContextProvider>
+    <Router>
+      <App />
+    </Router>
+  </TodoContextProvider>,
   document.getElementById("root")
 );
 

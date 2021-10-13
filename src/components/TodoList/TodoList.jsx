@@ -1,22 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import TodoItem from "../TodoItem/TodoItem";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import List from "@mui/material/List";
 import style from "./TodoList.module.scss";
+import TodoContext from "../../store/TodoContext";
 
-const TodoList = ({
-  todoList,
-  deleteTodoItem,
-  updateEditedTodoItem,
-  listTitle,
-}) => {
+const TodoList = ({ todoList, listTitle }) => {
+  const todoContext = useContext(TodoContext);
   const onDeleteTodoItem = (id) => {
-    deleteTodoItem(id);
+    todoContext.deleteTodoItem(id);
   };
 
   const updateTodoItemDescription = (id, newItemDescription) => {
-    updateEditedTodoItem(id, newItemDescription);
+    todoContext.editTodoItem(id, newItemDescription);
   };
 
   return (

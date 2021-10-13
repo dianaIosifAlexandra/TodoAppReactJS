@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
@@ -6,8 +6,10 @@ import TextField from "@mui/material/TextField";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 
 import style from "./AddTodoItem.module.scss";
+import TodoContext from "../../store/TodoContext";
 
-const AddTodoItem = ({ submit }) => {
+const AddTodoItem = () => {
+  const todoContext = useContext(TodoContext);
   let [todoItemDescription, setTodoItemDescription] = useState("");
   const [isAddBtnAvailable, setAddIsBtnAvailable] = useState(true);
   let [deadline, setDeadline] = useState("");
@@ -22,7 +24,7 @@ const AddTodoItem = ({ submit }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    submit(todoItemDescription, deadline);
+    todoContext.addTodoItem(todoItemDescription, deadline);
     setTodoItemDescription("");
     setDeadline("");
     setAddIsBtnAvailable(true);
