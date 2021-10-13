@@ -16,6 +16,10 @@ const TodoList = ({ todoList, listTitle }) => {
     todoContext.editTodoItem(id, newItemDescription);
   };
 
+  const handleMarkAsDone = (id, event) => {
+    todoContext.markTodoItemAsDone(id, event);
+  };
+
   return (
     <div className={style.todoListContainer}>
       <Card>
@@ -28,6 +32,8 @@ const TodoList = ({ todoList, listTitle }) => {
                 key={todoItem.id}
                 deletetodoItem={onDeleteTodoItem}
                 updateTodoItem={updateTodoItemDescription}
+                markTodoItemAsDone={handleMarkAsDone}
+                isDone={todoContext.todoItmeIsDone}
               />
             ))}
           </List>

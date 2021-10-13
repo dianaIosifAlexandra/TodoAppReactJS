@@ -11,7 +11,13 @@ import EditModal from "../EditModal/EditModal";
 
 import style from "./TodoItem.module.scss";
 
-const TodoItem = ({ todoItem, deletetodoItem, updateTodoItem }) => {
+const TodoItem = ({
+  todoItem,
+  deletetodoItem,
+  updateTodoItem,
+  markTodoItemAsDone,
+  isDone,
+}) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 
   const onDeleteTodoItem = () => {
@@ -30,11 +36,18 @@ const TodoItem = ({ todoItem, deletetodoItem, updateTodoItem }) => {
     updateTodoItem(todoItem.id, newItemDescription);
   };
 
+  const handleMarkTodoItemAsDone = (event) => {
+    markTodoItemAsDone(todoItem.id, event);
+  };
+
   return (
     <div>
       <Grid container spacing={2}>
         <Grid item xs={2} sm={2} md={2}>
-          <Checkbox />
+          <Checkbox
+            checked={todoItem.isDone}
+            onChange={handleMarkTodoItemAsDone}
+          />
         </Grid>
         <Grid item xs={2} sm={4} md={4}>
           <ListItemText>{todoItem.description}</ListItemText>

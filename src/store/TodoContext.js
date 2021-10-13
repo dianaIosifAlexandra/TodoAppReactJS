@@ -6,6 +6,7 @@ const TodoContext = React.createContext({
   addTodoItem: (todoItemDescription, deadline) => {},
   deleteTodoItem: (id) => {},
   editTodoItem: (id, newItemDescription) => {},
+  markTodoItemAsDone: (id, event) => {},
 });
 
 export const TodoContextProvider = (props) => {
@@ -48,6 +49,19 @@ export const TodoContextProvider = (props) => {
     });
   };
 
+  const handleMarkAsDone = (id, event) => {
+    setTodoList((prevTodoList) => {
+      const editedList = prevTodoList.map((item) => {
+        if (item.id === id) {
+          item.isDone = event.target.checked;
+        }
+        return item;
+      });
+
+      return editedList;
+    });
+  };
+
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(todoList));
   }, [todoList]);
@@ -59,6 +73,7 @@ export const TodoContextProvider = (props) => {
         deleteTodoItem: deleteItem,
         editTodoItem: updateTodoItem,
         addTodoItem: handleSubmit,
+        markTodoItemAsDone: handleMarkAsDone,
       }}
     >
       {props.children}
