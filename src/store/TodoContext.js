@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import TodoItem from "../models/TodoItem";
 
 const TodoContext = React.createContext({
@@ -7,6 +7,7 @@ const TodoContext = React.createContext({
   deleteTodoItem: (id) => {},
   editTodoItem: (id, newItemDescription) => {},
   markTodoItemAsDone: (id, event) => {},
+  sortList: () => {},
 });
 
 export const TodoContextProvider = (props) => {
@@ -16,27 +17,27 @@ export const TodoContextProvider = (props) => {
     return initialValue || [];
   });
 
-  const handleSubmit = (todoItemDescription, deadline) => {
+  const handleSubmitCallback = useCallback((todoItemDescription, deadline) => {
     setTodoList((prevTodoList) => {
       return [
         ...prevTodoList,
         new TodoItem(
           Math.random().toString(),
           todoItemDescription,
-          new Date(deadline).toString(),
+          deadline,
           false
         ),
       ];
     });
-  };
+  }, []);
 
-  const deleteItem = (id) => {
+  const deleteItemCallback = useCallback((id) => {
     setTodoList((prevTodoList) => {
       return [...prevTodoList.filter((item) => item.id !== id)];
     });
-  };
+  }, []);
 
-  const updateTodoItem = (id, newItemDescription) => {
+  const updateTodoItemCallback = useCallback((id, newItemDescription) => {
     setTodoList((prevTodoList) => {
       const editedList = prevTodoList.map((item) => {
         if (item.id === id) {
@@ -47,9 +48,9 @@ export const TodoContextProvider = (props) => {
 
       return editedList;
     });
-  };
+  }, []);
 
-  const handleMarkAsDone = (id, event) => {
+  const handleMarkAsDoneCallback = useCallback((id, event) => {
     setTodoList((prevTodoList) => {
       const editedList = prevTodoList.map((item) => {
         if (item.id === id) {
@@ -60,22 +61,49 @@ export const TodoContextProvider = (props) => {
 
       return editedList;
     });
-  };
+  }, []);
+
+  const handleSortListCallback = useCallback((list) => {
+    list.sort((todo, nextTodo) => {
+      let position = 0;
+
+      if (todo.deadline > nextTodo.deadline) {
+        position = 1;
+      }
+      if (todo.deadline < nextTodo.deadline) {
+        position = -1;
+      }
+      return position;
+    });
+
+    return list;
+  }, []);
+
+  const valueMemorized = useMemo(
+    () => ({
+      todoList: todoList,
+      deleteTodoItem: deleteItemCallback,
+      editTodoItem: updateTodoItemCallback,
+      addTodoItem: handleSubmitCallback,
+      markTodoItemAsDone: handleMarkAsDoneCallback,
+      sortList: handleSortListCallback,
+    }),
+    [
+      deleteItemCallback,
+      updateTodoItemCallback,
+      handleSubmitCallback,
+      handleMarkAsDoneCallback,
+      todoList,
+      handleSortListCallback,
+    ]
+  );
 
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(todoList));
   }, [todoList]);
 
   return (
-    <TodoContext.Provider
-      value={{
-        todoList: todoList,
-        deleteTodoItem: deleteItem,
-        editTodoItem: updateTodoItem,
-        addTodoItem: handleSubmit,
-        markTodoItemAsDone: handleMarkAsDone,
-      }}
-    >
+    <TodoContext.Provider value={valueMemorized}>
       {props.children}
     </TodoContext.Provider>
   );

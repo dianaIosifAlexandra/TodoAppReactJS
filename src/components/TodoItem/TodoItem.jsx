@@ -16,7 +16,6 @@ const TodoItem = ({
   deletetodoItem,
   updateTodoItem,
   markTodoItemAsDone,
-  isDone,
 }) => {
   const [openEditModal, setOpenEditModal] = useState(false);
 

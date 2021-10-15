@@ -31,7 +31,7 @@ const AddTodoItem = () => {
   };
 
   useEffect(() => {
-    if (todoItemDescription && deadline) {
+    if (todoItemDescription) {
       setAddIsBtnAvailable(false);
     }
   }, [todoItemDescription, deadline]);
@@ -58,7 +58,6 @@ const AddTodoItem = () => {
             InputLabelProps={{
               shrink: true,
             }}
-            required
             value={deadline}
             onChange={handleChangeDeadline}
             fullWidth

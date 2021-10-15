@@ -2,7 +2,38 @@ export default class TodoItem {
   constructor(id, description, deadline, isDone) {
     this.id = id || null;
     this.description = description || "";
-    this.deadline = deadline || Date();
+    this.deadline = this.formatDate(deadline) || Date();
     this.isDone = isDone || false;
+  }
+
+  anytime = "Anytime";
+
+  formatDate(date) {
+    if (!date) {
+      return this.anytime;
+    } else {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear(),
+        hour = "" + d.getHours(),
+        minutes = "" + d.getMinutes();
+
+      if (month.length < 2) {
+        month = "0" + month;
+      }
+      if (day.length < 2) {
+        day = "0" + day;
+      }
+
+      if (hour.length < 2) {
+        hour = "0" + hour;
+      }
+
+      if (minutes.length < 2) {
+        minutes = "0" + minutes;
+      }
+      return [year, month, day].join("-") + " " + hour + ":" + minutes;
+    }
   }
 }

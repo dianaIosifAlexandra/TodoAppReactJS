@@ -16,9 +16,9 @@ const Dashboard = () => {
     const deadlineDate = new Date(deadline);
 
     if (
-      deadlineDate.getDate() === today.getDate() &&
-      deadlineDate.getMonth() === today.getMonth() &&
-      deadlineDate.getFullYear() === today.getFullYear()
+      deadlineDate.getDate() <= today.getDate() &&
+      deadlineDate.getMonth() <= today.getMonth() &&
+      deadlineDate.getFullYear() <= today.getFullYear()
     ) {
       deadlineIsToday = true;
     }
@@ -26,11 +26,13 @@ const Dashboard = () => {
     return deadlineIsToday;
   };
 
-  const todoListToday = todoContext.todoList.filter((item) =>
-    deadlineIsToday(item.deadline)
+  // console.log("sortList: ", sortList(todoList));
+
+  const todoListToday = todoContext.sortList(
+    todoContext.todoList.filter((item) => deadlineIsToday(item.deadline))
   );
-  const todoListAnytime = todoContext.todoList.filter(
-    (item) => !deadlineIsToday(item.deadline)
+  const todoListAnytime = todoContext.sortList(
+    todoContext.todoList.filter((item) => !deadlineIsToday(item.deadline))
   );
 
   return (
@@ -38,11 +40,8 @@ const Dashboard = () => {
       <Header />
       <main>
         <AddTodoItem />
-        <TodoList todoList={todoListToday} listTitle="Todo items for today" />
-        <TodoList
-          todoList={todoListAnytime}
-          listTitle="Todo items for anytime"
-        />
+        <TodoList todoList={todoListToday} listTitle="Overdue todo items" />
+        <TodoList todoList={todoListAnytime} listTitle="Left todo items" />
       </main>
     </div>
   );

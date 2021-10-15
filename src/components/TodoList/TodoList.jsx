@@ -33,7 +33,6 @@ const TodoList = ({ todoList, listTitle }) => {
                 deletetodoItem={onDeleteTodoItem}
                 updateTodoItem={updateTodoItemDescription}
                 markTodoItemAsDone={handleMarkAsDone}
-                isDone={todoContext.todoItmeIsDone}
               />
             ))}
           </List>
